@@ -6,7 +6,7 @@
  * Time: 7:59 PM
  * To change this template use File | Settings | File Templates.
  */
-class LogController extends Zend_Controller_Action {
+class LogsController extends Zend_Controller_Action {
 
     public function indexAction() {
 
