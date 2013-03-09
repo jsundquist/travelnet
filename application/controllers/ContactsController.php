@@ -7,6 +7,13 @@ class ContactsController extends Zend_Controller_Action {
     /**
      *
      */
+    public function init(){
+        $this->view->controller = "contacts";
+    }
+
+    /**
+     *
+     */
     public function indexAction(){
 
     }

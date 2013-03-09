@@ -8,6 +8,13 @@
  */
 class LogsController extends Zend_Controller_Action {
 
+    /**
+     *
+     */
+    public function init(){
+        $this->view->controller = "logs";
+    }
+
     public function indexAction() {
 
     }

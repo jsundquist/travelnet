@@ -5,6 +5,13 @@
 class PropertiesController extends Zend_Controller_Action {
 
     /**
+     *
+     */
+    public function init(){
+        $this->view->controller = "properties";
+    }
+
+    /**
      * A listing of all properties currently within the system
      */
     public function indexAction(){
