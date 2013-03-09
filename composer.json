@@ -1,0 +1,8 @@
+{
+    "require": {
+        "zendframework/zendframework1": "dev-release-1.12",
+        "ruckusing/ruckusing-migrations": "dev-master",
+        "twilio/sdk": "dev-master"
+    },
+    "vendor-dir": "library"
+}
