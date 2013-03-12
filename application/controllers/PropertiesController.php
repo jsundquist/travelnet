@@ -52,7 +52,7 @@ class PropertiesController extends Zend_Controller_Action {
 
         if($request->isPost()){
             if($form->isValid($request->getPost())){
-                $property = Application_Model_DbTable_Properties();
+                $property = new Application_Model_DbTable_Properties();
                 $property->save($form->getValues());
                 $this->_helper->redirect('index');
             } else {
