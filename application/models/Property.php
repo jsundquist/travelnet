@@ -84,7 +84,7 @@ class Application_Model_Property
         return $this->_city;
     }
 
-    public function getState($text)
+    public function setState($text)
     {
         $this->_state = (string) $text;
         return $this;
