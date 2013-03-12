@@ -30,11 +30,11 @@
                                 <?php echo $this->escape($property->address); ?><br>
                                 <?php echo $this->escape($property->city); ?>,
                                 <?php echo $this->escape($property->state); ?>
-                                <?php echo $this->escape($property->postalCode); ?>
+                                <?php echo $this->escape($property->postal_code); ?>
                             </td>
-                            <td><?php echo $this->escape($property->phoneNumber); ?></td>
-                            <td><a href="/properties/edit/<?php echo $this->escape($property->id); ?>">Edit</a>
-                                | <a href="/properties/delete/<?php echo $this->escape($property->id); ?>">delete</a></td>
+                            <td><?php echo $this->escape($property->phone_number); ?></td>
+                            <td><a href="/properties/edit?id=<?php echo $this->escape($property->id); ?>">Edit</a>
+                                | <a href="/properties/delete?id=<?php echo $this->escape($property->id); ?>">delete</a></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

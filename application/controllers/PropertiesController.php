@@ -34,6 +34,7 @@ class PropertiesController extends Zend_Controller_Action {
             if($form->isValid($request->getPost())){
                 $property = new Application_Model_DbTable_Properties();
                 $property->createProperty($form->getValues());
+                $this->_helper->redirector('index');
             } else {
                 $form->populate($form->getValues());
             }
@@ -53,8 +54,10 @@ class PropertiesController extends Zend_Controller_Action {
         if($request->isPost()){
             if($form->isValid($request->getPost())){
                 $property = new Application_Model_DbTable_Properties();
-                $property->save($form->getValues());
-                $this->_helper->redirect('index');
+
+                $property->updateProperty($form->getValue('id'), $form->getValues());
+                $this->_helper->redirector('index');
+
             } else {
                 $form->populate($request->getPost());
             }
@@ -84,6 +87,12 @@ class PropertiesController extends Zend_Controller_Action {
      *
      */
     public function deleteAction() {
-
+        $id = $this->getParam('id', 0);
+        if($id >0){
+            $property = new Application_Model_DbTable_Properties();
+            $property->deleteProperty($id);
+        }
+        
+        $this->_helper->redirector('index');
     }
 }

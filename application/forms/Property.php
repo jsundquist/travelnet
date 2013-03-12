@@ -4,6 +4,11 @@ class Application_Form_Property extends Zend_Form {
     public function init(){
 
         $this->setMethod("post");
+        
+        $this->addElement('hidden', 'id', array(
+            'ignore' => true,
+            'filters' => array('Int')
+        ));
 
         $this->addElement('text','name', array(
             'label' => 'Name',
