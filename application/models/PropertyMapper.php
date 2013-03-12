@@ -18,7 +18,7 @@ class Application_Model_PropertyMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Application_Model_DbTable_Guestbook');
+            $this->setDbTable('Application_Model_DbTable_Properties');
         }
         return $this->_dbTable;
     }
