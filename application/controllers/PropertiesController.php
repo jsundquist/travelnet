@@ -15,7 +15,7 @@ class PropertiesController extends Zend_Controller_Action {
      * A listing of all properties currently within the system
      */
     public function indexAction(){
-        $properties = new Application_Model_PropertyMapper();
+        $properties = new Application_Model_DbTable_Properties();
 
         $this->view->properties = $properties->fetchAll();
     }
@@ -28,13 +28,16 @@ class PropertiesController extends Zend_Controller_Action {
 
         $form = new Application_Form_Property();
 
+        $this->view->form = $form;
+
         if($this->getRequest()->isPost()) {
             if($form->isValid($request->getPost())){
-
+                $property = new Application_Model_DbTable_Properties();
+                $property->createProperty($form->getValues());
+            } else {
+                $form->populate($form->getValues());
             }
         }
-
-        $this->view->form = $form;
     }
 
     /**
@@ -49,10 +52,8 @@ class PropertiesController extends Zend_Controller_Action {
 
         if($request->isPost()){
             if($form->isValid($request->getPost())){
-                var_dump($form->getValues());
-                $property = new Application_Model_Property($form->getValues());
-                $mapProperty = new Application_Model_PropertyMapper();
-                $mapProperty->save($property);
+                $property = Application_Model_DbTable_Properties();
+                $property->save($form->getValues());
                 $this->_helper->redirect('index');
             } else {
                 $form->populate($request->getPost());
@@ -60,7 +61,7 @@ class PropertiesController extends Zend_Controller_Action {
         } else {
             $id = $this->getParam('id',0);
             if($id > 0) {
-                $property = new Application_Model_PropertyMapper();
+                $property = new Application_Model_DbTable_Properties();
                 $form->populate($property->getProperty($id));
             }
         }
