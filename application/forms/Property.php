@@ -35,8 +35,8 @@ class Application_Form_Property extends Zend_Form {
             'filters' => array('StringTrim')
         ));
 
-        $this->addElement('text','phone', array(
-            'label' => 'Phone',
+        $this->addElement('text','phone_number', array(
+            'label' => 'Phone Number',
             'required' => true,
             'filters' => array('StringTrim')
         ));

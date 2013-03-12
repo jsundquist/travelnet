@@ -2,6 +2,9 @@
 
 class Application_Model_Property
 {
+
+    protected $_id;
+
     protected $_name;
 
     protected $_address;
@@ -13,6 +16,8 @@ class Application_Model_Property
     protected $_postalCode;
 
     protected $_phoneNumber;
+
+    protected $_created;
 
     public function __construct(array $options = null)
     {
@@ -116,6 +121,28 @@ class Application_Model_Property
     public function getPhoneNumber()
     {
         return $this->_phoneNumber;
+    }
+
+    public function setId($id)
+    {
+        $this->_id = (int) $id;
+        return $this;
+    }
+
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    public function setCreated($date)
+    {
+        $this->_created = $date;
+        return $this;
+    }
+
+    public function getCreated()
+    {
+        return $this->_created;
     }
 
 }

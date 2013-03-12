@@ -42,6 +42,28 @@ class PropertiesController extends Zend_Controller_Action {
      * will be relaid to potential clients/customers we need to make sure we have everything up to date.
      */
     public function editAction() {
+        $request = $this->getRequest();
+        $form = new Application_Form_Property();
+
+        $this->view->form = $form;
+
+        if($request->isPost()){
+            if($form->isValid($request->getPost())){
+                var_dump($form->getValues());
+                $property = new Application_Model_Property($form->getValues());
+                $mapProperty = new Application_Model_PropertyMapper();
+                $mapProperty->save($property);
+                $this->_helper->redirect('index');
+            } else {
+                $form->populate($request->getPost());
+            }
+        } else {
+            $id = $this->getParam('id',0);
+            if($id > 0) {
+                $property = new Application_Model_PropertyMapper();
+                $form->populate($property->getProperty($id));
+            }
+        }
 
     }
 

@@ -51,13 +51,18 @@ class Application_Model_PropertyMapper
         }
         $row = $result->current();
         $property->setId($row->id)
-            ->setName($row->email)
+            ->setName($row->name)
             ->setAddress($row->address)
             ->setCity($row->city)
             ->setState($row->state)
-            ->setPostalCode($row->post_code)
+            ->setPostalCode($row->postal_code)
             ->setPhoneNumber($row->phone_number)
             ->setCreated($row->created);
+    }
+
+    public function getProperty($id){
+        $return = $this->getDbTable()->fetchRow($id);
+        return $return->toArray();
     }
 
     public function fetchAll()
@@ -67,11 +72,11 @@ class Application_Model_PropertyMapper
         foreach ($resultSet as $row) {
             $entry = new Application_Model_Property();
             $entry->setId($row->id)
-                ->setName($row->email)
+                ->setName($row->name)
                 ->setAddress($row->address)
                 ->setCity($row->city)
                 ->setState($row->state)
-                ->setPostalCode($row->post_code)
+                ->setPostalCode($row->postal_code)
                 ->setPhoneNumber($row->phone_number)
                 ->setCreated($row->created);
             $entries[] = $entry;
