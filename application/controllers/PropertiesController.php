@@ -15,14 +15,26 @@ class PropertiesController extends Zend_Controller_Action {
      * A listing of all properties currently within the system
      */
     public function indexAction(){
+        $properties = new Application_Model_PropertyMapper();
 
+        $this->view->properties = $properties->fetchAll();
     }
 
     /**
      * A way to add properties into our system.
      */
     public function addAction() {
+        $request = $this->getRequest();
 
+        $form = new Application_Form_Property();
+
+        if($this->getRequest()->isPost()) {
+            if($form->isValid($request->getPost())){
+
+            }
+        }
+
+        $this->view->form = $form;
     }
 
     /**
