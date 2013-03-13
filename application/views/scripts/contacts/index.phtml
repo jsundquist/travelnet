@@ -2,7 +2,7 @@
     <div class="span3">
         <div class="well sidebar-nav">
             <ul class="nav nav-list">
-                <li class="nav-header">Contacts</li>
+                <li class="nav-header">Properties</li>
                 <li class="active"><a href="/contacts">List</a></li>
                 <li><a href="/contacts/add">Add</a></li>
             </ul>
@@ -13,15 +13,31 @@
             <div class="span12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
-
+                    <tbody>
+                    <?php foreach($this->contacts as $contact): ?>
+                    <tr>
+                        <td><?php echo $this->escape($contact->id); ?></td>
+                        <td><?php echo $this->escape($contact->name); ?></td>
+                        <td>
+                            <?php echo $this->escape($contact->address); ?><br>
+                            <?php echo $this->escape($contact->city); ?>,
+                            <?php echo $this->escape($contact->state); ?>
+                            <?php echo $this->escape($contact->postal_code); ?>
+                        </td>
+                        <td><?php echo $this->escape($contact->phone_number); ?></td>
+                        <td><a href="/contacts/edit?id=<?php echo $this->escape($contact->id); ?>">Edit</a>
+                            | <a href="/contacts/delete?id=<?php echo $this->escape($contact->id); ?>">delete</a></td>
+                    </tr>
+                        <?php endforeach; ?>
+                    </tbody>
                 </table>
             </div><!--/span-->
         </div><!--/row-->
