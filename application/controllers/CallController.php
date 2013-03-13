@@ -31,13 +31,20 @@ class CallController extends Zend_Controller_Action {
         }
     }
 
-    public function enjoyedAction(){}
+    public function enjoyedAction(){
+    }
 
     public function didntEnjoyAction(){}
 
     public function noVisitAction(){}
 
-    public function wouldReferAction(){}
+    public function recommendAction(){
+        $this->_helper->redirector('otherProperties');
+    }
 
-    public function otherPropertiesAction(){}
+    public function otherPropertiesAction(){
+        $this->_helper->redirector('thankYou');
+    }
+
+    public function thankYouAction(){}
 }
