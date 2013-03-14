@@ -2,49 +2,128 @@
 /**
  *
  */
-class CallController extends Zend_Controller_Action {
+class CallController extends Zend_Controller_Action
+{
 
-    public function init(){
+    public function init()
+    {
         $this->_helper->layout()->disableLayout();
         $this->getResponse()->setHeader('Content-Type', 'text/xml');
     }
-    
-    /**
-     *
-     */
-    public function indexAction() {
-    }
 
-    public function step2Action(){
-        $response = $this->getParam('Digits', 0);
-        
-        switch($response){
-            case 1:
-                $this->_helper->redirector('enjoyed');
-                break;
-            case 2:
-                $this->_helper->redirector('didntEnjoy');
-                break;
-            case 3:
-                $this->_helper->redirector('noVisit');
-                break;
+    /**
+     * Initial call. Find out if they booked or not
+     */
+    public function indexAction()
+    {
+        $digits = $this->getParam('Digits', 0);
+        $callId = $this->getParam('call_id', 0);
+
+        if ($digits) {
+            $call = new Application_Model_DbTable_Calls();
+
+            switch ($digits) {
+                case 1:
+                    $call->updateCall($callId, array('booked' => 1));
+                    $this->_helper->redirector('booked?call_id=' . $callId);
+                    break;
+                case 2:
+                    $call->updateCall($callId, array('booked' => 0));
+                    $this->_helper->redirector('noBooking?call_id=' . $callId);
+                    break;
+            }
         }
     }
 
-    public function enjoyedAction(){
+    /**
+     *
+     */
+    public function bookedAction()
+    {
+        $digits = $this->getParam('Digits', 0);
+        $callId = $this->getParam('call_id', 0);
+
+        if ($digits && $digits <= 5) {
+            $call = new Application_Model_DbTable_Calls();
+            $call->updateCall($callId, array('rating' => $digits));
+
+            $this->_helper->redirector('recommend?call_id=' . $callId);
+        }
     }
 
-    public function didntEnjoyAction(){}
+    public function recommendAction()
+    {
+        $digits = $this->getParam('Digits', 0);
+        $callId = $this->getParam('call_id', 0);
 
-    public function noVisitAction(){}
+        if ($digits) {
+            $call = new Application_Model_DbTable_Calls();
+            $call->updateCall($callId, array('recommend' => $digits - 1));
 
-    public function recommendAction(){
-        $this->_helper->redirector('otherProperties');
+            $this->_helper->redirector('otherProperties?call_id=' . $callId);
+        }
     }
 
-    public function otherPropertiesAction(){
-        $this->_helper->redirector('thankYou');
+    /**
+     *
+     */
+    public function noBookingAction()
+    {
+        $digits = $this->getParam('Digits', 0);
+        $callId = $this->getParam('call_id', 0);
+
+        if ($digits) {
+            $call = new Application_Model_DbTable_Calls();
+            $call->updateCall($callId, array('reason' => $digits));
+            $this->_helper->redirector('otherProperties?call_id=' . $callId);
+        }
     }
 
-    public function thankYouAction(){}
+    /**
+     *
+     */
+    public function otherPropertiesAction()
+    {
+        $digits = $this->getParam('Digits', 0);
+        $callId = $this->getParam('call_id', 0);
+
+        if ($digits) {
+            switch ($digits) {
+                case 1:
+                    $this->_helper->redirector('otherProperties?call_id=' . $callId);
+                    break;
+                case 2:
+                    $this->_helper->redirector('goodBye?call_id=' . $callId);
+                    break;
+            }
+            $call = new Application_Model_DbTable_Calls();
+            $call->updateCall($callId, array('rating' => $digits));
+
+
+        }
+    }
+
+    public function propertiesAction(){
+        $digits = $this->getParam('Digits', 0);
+        $callId = $this->getParam('call_id', 0);
+
+        $property = new Application_Model_DbTable_Properties();
+        $this->view->properties = $property->fetchAll(null, null, 3);
+    }
+
+    /**
+     *
+     */
+    public function connectAction()
+    {
+        $digits = $this->getParam('Digits', 0);
+        $callId = $this->getParam('call_id', 0);
+    }
+
+    /**
+     *
+     */
+    public function goodByeAction()
+    {
+    }
 }
