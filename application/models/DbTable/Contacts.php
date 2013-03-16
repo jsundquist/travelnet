@@ -29,4 +29,16 @@ class Application_Model_DbTable_Contacts extends Zend_Db_Table_Abstract
     public function deleteContact($id){
         $this->delete('id = ' . $id);
     }
+
+    public function getPairs(){
+        $contacts = $this->fetchAll();
+
+        $pairs = array();
+
+        foreach($contacts as $contact){
+            $pairs[$contact->id] = $contact->phone_number;
+        }
+
+        return $pairs;
+    }
 }

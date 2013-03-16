@@ -1,8 +1,39 @@
-<?php
-/**
- * Created by JetBrains PhpStorm.
- * User: jsundquist
- * Date: 3/15/13
- * Time: 9:09 PM
- * To change this template use File | Settings | File Templates.
- */
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header">Schedule Call</li>
+                <li class="active"><a href="/schedule">List</a></li>
+                <li><a href="/schedule/add">Add</a></li>
+            </ul>
+        </div><!--/.well -->
+    </div><!--/span-->
+    <div class="span9">
+        <div class="row-fluid">
+            <div class="span12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Name</th>
+                        <th>Number</th>
+                        <th>Status</th>
+                        <th>Date Created</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($this->calls as $call): ?>
+                        <tr>
+                            <td><?php echo $this->escape($call->id); ?></td>
+                            <td><?php echo $this->escape($call->name); ?></td>
+                            <td><?php echo $this->escape($call->phone_number); ?></td>
+                            <td><?php echo $this->escape($call->call_status); ?></td>
+                            <td><?php echo $this->escape($call->date_created); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div><!--/span-->
+        </div><!--/row-->
+    </div><!--/span-->
+</div><!--/row-->

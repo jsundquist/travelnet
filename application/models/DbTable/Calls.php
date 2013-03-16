@@ -5,20 +5,25 @@ class Application_Model_DbTable_Calls extends Zend_Db_Table_Abstract
 
     public function getPlacedCalls()
     {
-        return $this->fetchAll();
+        return $this->fetchAll('call_status <>"queued"');
     }
 
     public function getUnplacedCalls()
     {
-        return $this->fetchAll();
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+
+        $select->from($this->_name, array('calls.id', 'calls.call_status', 'calls.date_created'))->join('contacts', 'contacts.id = calls.caller_id', array('contacts.name','contacts.phone_number'))->where('call_status = "queued"');
+
+        return $this->fetchAll($select);
     }
 
     public function getCall($id)
     {
         $row = $this->fetchRow($id);
 
-        if (!$row) {
-
+        if(!$row){
+            return array();
         }
 
         return $row->toArray();
@@ -26,21 +31,16 @@ class Application_Model_DbTable_Calls extends Zend_Db_Table_Abstract
 
     public function createCall($data)
     {
-        $this->insert($data);
+        return $this->insert($data);
     }
 
     public function updateCall($id, $data)
     {
-
-        if (array_key_exists('id', $data)) {
-            unset($data['id']);
-        }
-
-        $this->update($data, 'id = ' . $id);
+        return $this->update($data, 'id = ' . $id);
     }
 
     public function deleteCall($id)
     {
-        $this->delete('id = ' . $id);
+        return $this->delete('id = ' . $id);
     }
 }

@@ -3,12 +3,20 @@
 class ScheduleController extends Zend_Controller_Action
 {
 
+    private $client;
+
+    public function init(){
+        $this->client = $this->getInvokeArg('bootstrap')->getResource('twilio');
+    }
+
     /**
      * Display a list of all the scheduled calls. We should only see the calls that have not yet been made
      */
     public function indexAction()
     {
+        $callModel = new Application_Model_DbTable_Calls();
 
+        $this->view->calls = $callModel->getUnplacedCalls();
     }
 
     /**
@@ -16,38 +24,35 @@ class ScheduleController extends Zend_Controller_Action
      */
     public function addAction()
     {
-        $AccountSid = 'AC6a91408d4993b7d6bee3efa15d19f80d';
-        $AuthToken = 'd861f6128265464d0830f8b8bb28a366';
 
-        $client = new Services_Twilio($AccountSid, $AuthToken);
+        $request = $this->getRequest();
 
-        $callModel = new Application_Model_DbTable_Calls();
-        $id = $callModel->insert(array('scheduled' => 1));
+        $form = new Application_Form_Schedule();
 
-        $call = $client->account->calls->create('6123548270', '6122708838', 'http://travelnet.digital-portfolio.net/call/index?call_id=0');
-    }
+        $this->view->form = $form;
 
-    /**
-     * Edit a call.  This will only be allowed if twilio has not yet made the call.
-     */
-    public function editAction()
-    {
+        $contactsModel = new Application_Model_DbTable_Contacts();
+        $element = $form->getElement('call_id');
+        $element->addMultiOptions($contactsModel->getPairs());
 
-    }
+        if($this->getRequest()->isPost()){
+            if($form->isValid($request->getPost())){
+                $callModel = new Application_Model_DbTable_Calls();
+                $id = $callModel->createCall(array('caller_id' => $form->getValue('call_id')));
+                $call = $this->client->account->calls->create('6123548270', '6122708838', 'http://travelnet.digital-portfolio.net/call/index?call_id=' . $id);
 
-    /**
-     * View the information about the call
-     */
-    public function viewAction()
-    {
+                $callModel->updateCall($id,
+                    array(
+                        'call_status' => $call->status,
+                        'call_sid' => $call->sid,
+                        'date_created'=>date("Y-m-d H:i:s", strtotime($call->date_created))
+                    )
+                );
 
-    }
-
-    /**
-     * Delete the call. Only allowed if the call has not yet been placed by twilio.
-     */
-    public function deleteAction()
-    {
-
+                $this->redirect('/schedule');
+            } else {
+                $form->populate($form->getValues());
+            }
+        }
     }
 }
