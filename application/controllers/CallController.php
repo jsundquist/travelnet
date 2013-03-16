@@ -61,7 +61,7 @@ class CallController extends Zend_Controller_Action
             $call = new Application_Model_DbTable_Calls();
             $call->updateCall($callId, array('recommend' => $digits - 1));
 
-            $this->redirect('/call/otherProperties?call_id=' . $callId);
+            $this->redirect('/call/otherproperties?call_id=' . $callId);
         }
     }
 
@@ -76,7 +76,7 @@ class CallController extends Zend_Controller_Action
         if ($digits) {
             $call = new Application_Model_DbTable_Calls();
             $call->updateCall($callId, array('reason' => $digits));
-            $this->redirect('/call/otherProperties?call_id=' . $callId);
+            $this->redirect('/call/otherproperties?call_id=' . $callId);
         }
     }
 
@@ -91,10 +91,10 @@ class CallController extends Zend_Controller_Action
         if ($digits) {
             switch ($digits) {
                 case 1:
-                    $this->redirect('/call/otherProperties?call_id=' . $callId);
+                    $this->redirect('/call/properties?call_id=' . $callId);
                     break;
                 case 2:
-                    $this->redirect('/call/goodBye?call_id=' . $callId);
+                    $this->redirect('/call/goodbye?call_id=' . $callId);
                     break;
             }
             $call = new Application_Model_DbTable_Calls();
