@@ -20,7 +20,11 @@ class ScheduleController extends Zend_Controller_Action
         $AuthToken = 'd861f6128265464d0830f8b8bb28a366';
 
         $client = new Services_Twilio($AccountSid, $AuthToken);
-        $call = $client->account->calls->create('6123548270', '6122708838', 'http://travelnet.digital-portfolio.net/call');
+
+        $callModel = new Application_Model_DbTable_Calls();
+        $id = $callModel->insert(array('scheduled' => 1));
+
+        $call = $client->account->calls->create('6123548270', '6122708838', 'http://travelnet.digital-portfolio.net/call/index?call_id=0');
     }
 
     /**

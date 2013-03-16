@@ -17,7 +17,8 @@ class CallController extends Zend_Controller_Action
     public function indexAction()
     {
         $digits = $this->getParam('Digits', 0);
-        $callId = $this->getParam('call_id', 0);
+        
+        $this->view->callId = $this->getParam('call_id', 0);;
 
         if ($digits) {
             $call = new Application_Model_DbTable_Calls();
