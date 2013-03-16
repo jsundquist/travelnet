@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Gather action="/call/recommend" numDigits="1">
+    <Gather action="/call/recommend?call_id=<?php echo $this->callId; ?>" numDigits="1">
         <Say>Would you consider recommending this property to someone.</Say>
         <Say>Press 1 for no.</Say>
         <Say>Press 2 for yes.</Say>

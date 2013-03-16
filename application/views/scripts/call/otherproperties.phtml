@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Gather action="/call/otherProperties" numDigits="1">
+    <Gather action="/call/otherProperties?call_id=<?php echo $this->callId; ?>" numDigits="1">
         <Say>Thank you.</Say>
         <Say>Would you be interested in hearing about other properties?</Say>
         <Say>Press 1 to hear about other properties.</Say>

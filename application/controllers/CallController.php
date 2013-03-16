@@ -43,7 +43,7 @@ class CallController extends Zend_Controller_Action
     public function bookedAction()
     {
         $digits = $this->getParam('Digits', 0);
-        $callId = $this->getParam('call_id', 0);
+        $this->view->callId = $callId = $this->getParam('call_id', 0);
 
         if ($digits && $digits <= 5) {
             $call = new Application_Model_DbTable_Calls();
@@ -56,7 +56,7 @@ class CallController extends Zend_Controller_Action
     public function recommendAction()
     {
         $digits = $this->getParam('Digits', 0);
-        $callId = $this->getParam('call_id', 0);
+        $this->view->callId = $callId = $this->getParam('call_id', 0);
 
         if ($digits) {
             $call = new Application_Model_DbTable_Calls();
@@ -72,7 +72,7 @@ class CallController extends Zend_Controller_Action
     public function nobookingAction()
     {
         $digits = $this->getParam('Digits', 0);
-        $callId = $this->getParam('call_id', 0);
+        $this->view->callId = $callId = $this->getParam('call_id', 0);
 
         if ($digits) {
             $call = new Application_Model_DbTable_Calls();
@@ -87,7 +87,7 @@ class CallController extends Zend_Controller_Action
     public function otherpropertiesAction()
     {
         $digits = $this->getParam('Digits', 0);
-        $callId = $this->getParam('call_id', 0);
+        $this->view->callId = $callId = $this->getParam('call_id', 0);
 
         if ($digits) {
             switch ($digits) {
@@ -107,7 +107,7 @@ class CallController extends Zend_Controller_Action
 
     public function propertiesAction(){
         $digits = $this->getParam('Digits', 0);
-        $callId = $this->getParam('call_id', 0);
+        $this->view->callId = $callId = $this->getParam('call_id', 0);
 
         $property = new Application_Model_DbTable_Properties();
         $this->view->properties = $property->fetchAll(null, null, 3);
