@@ -3,8 +3,8 @@
     <Gather action="/call/booked" numDigits="1">
         <Say>Based on your original property we have determined that you may be also interested in the following.</Say>
         <Say>Based on your selection we will automatically connect you with the property.</Say>
-        <?php foreach($this->properties as $property):?>
-        <Say>Press 1 to connect to <?php echo $.</Say>
+        <?php foreach($this->properties as $i => $property):?>
+        <Say>Press <?php echo $i; ?> to connect to <?php echo $property->name; ?></Say>
         <?php endforeach; ?>
     </Gather>
     <Say>Sorry I didn't get your response.</Say>

@@ -16,7 +16,9 @@ class LogsController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
+        $callsModel = new Application_Model_DbTable_Calls();
 
+        $this->view->calls = $callsModel->fetchAll();
     }
 
     public function viewAction() {

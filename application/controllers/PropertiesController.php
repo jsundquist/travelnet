@@ -72,14 +72,6 @@ class PropertiesController extends Zend_Controller_Action {
     }
 
     /**
-     * The view action is used in case the current logged in user does not have permission to modify the properties.
-     * In this case they should still be able to view the properties information.
-     */
-    public function viewAction() {
-
-    }
-
-    /**
      * The delete action will preform a "soft" delete on the property.  Since we may have call logs associated
      * to the property we do not want to lose that information. Because of this the property will just be set
      * hidden.
