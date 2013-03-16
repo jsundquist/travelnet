@@ -5,7 +5,12 @@ class Application_Model_DbTable_Calls extends Zend_Db_Table_Abstract
 
     public function getPlacedCalls()
     {
-        return $this->fetchAll('call_status <>"queued"');
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+
+        $select->from($this->_name, array('calls.id', 'calls.call_status', 'calls.date_created'))->join('contacts', 'contacts.id = calls.caller_id', array('contacts.name','contacts.phone_number'))->where('call_status <>"queued"');
+
+        return $this->fetchAll($select);
     }
 
     public function getUnplacedCalls()
@@ -20,7 +25,19 @@ class Application_Model_DbTable_Calls extends Zend_Db_Table_Abstract
 
     public function getCall($id)
     {
-        $row = $this->fetchRow($id);
+        $select = $this->select();
+
+        $select->setIntegrityCheck(false);
+
+        $callTable = array('id','booked','rating','recommend','reason','call_status','date_created','date_updated');
+
+        $contactTable = array('name','address','city','state','postal_code','phone_number');
+        $select->from($this->_name, $callTable)
+                ->join('contacts', 'contacts.id = calls.caller_id',$contactTable)
+                ->joinLeft('no_booking_reasons', 'no_booking_reasons.id = calls.reason', array('no_booking_reasons.reason'))
+                ->where('calls.id = ' . $id);
+
+        $row = $this->fetchRow($select);
 
         if(!$row){
             return array();
@@ -37,10 +54,5 @@ class Application_Model_DbTable_Calls extends Zend_Db_Table_Abstract
     public function updateCall($id, $data)
     {
         return $this->update($data, 'id = ' . $id);
-    }
-
-    public function deleteCall($id)
-    {
-        return $this->delete('id = ' . $id);
     }
 }

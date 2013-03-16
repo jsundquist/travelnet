@@ -97,6 +97,9 @@ class CallController extends Zend_Controller_Action
         $digits = $this->getParam('Digits', 0);
         $this->view->callId = $callId = $this->getParam('call_id', 0);
 
+        $reasonsModel = new Application_Model_DbTable_Reasons();
+        $this->view->reasons = $reasonsModel->fetchAll();
+
         if ($digits) {
             $this->callModel->updateCall($callId, array('reason' => $digits));
             $this->redirect('/call/otherproperties?call_id=' . $callId);

@@ -5,8 +5,9 @@ class Application_Model_DbTable_Properties extends Zend_Db_Table_Abstract
 
     public function getProperty($id){
          $row = $this->fetchRow($id);
-        if(!$row){
 
+        if(!$row){
+            return array();
         }
 
         return $row->toArray();
@@ -18,11 +19,6 @@ class Application_Model_DbTable_Properties extends Zend_Db_Table_Abstract
     }
 
     public function updateProperty($id, $data){
-
-        if(array_key_exists('id', $data)){
-            $id = $data['id'];
-            unset($data['id']);
-        }
 
         $this->update($data, 'id = ' . (int)$id);
     }

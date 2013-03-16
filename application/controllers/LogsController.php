@@ -21,14 +21,18 @@ class LogsController extends Zend_Controller_Action {
     public function indexAction() {
         $callsModel = new Application_Model_DbTable_Calls();
 
-        $this->view->calls = $callsModel->fetchAll();
-
-//        $call = $this->client->account->calls->get('CA91dc28209f8bf2fcfba87e6916c78a9f');
-//        var_dump($call);die();
-
+        $this->view->calls = $callsModel->getPlacedCalls();
     }
 
     public function viewAction() {
+        $id = $this->getParam('id', 0);
+        if($id === 0){
+            $this->redirect('/logs');
+        }
 
+        $callsModel = new Application_Model_DbTable_Calls();
+
+        $this->view->caller = $callsModel->getCall($id);
+//        var_dump($this->view->caller);die();
     }
 }

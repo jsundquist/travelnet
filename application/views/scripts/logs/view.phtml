@@ -1,0 +1,104 @@
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header">Placed Call</li>
+                <li><a href="/logs">List</a></li>
+                <li class="active"><a href="/logs/view?id=<?php echo $this->caller['id'];?>">View Call</a></li>
+            </ul>
+        </div><!--/.well -->
+    </div><!--/span-->
+    <div class="span9">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span3">
+                        Name:
+                    </div>
+                    <div class="span9">
+                        <?php echo $this->caller['name'];?>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span3">
+                        Address:
+                    </div>
+                    <div class="span9">
+                        <?php echo $this->caller['address'];?><br />
+                        <?php echo $this->caller['city']; ?>, <?php echo $this->caller['state']; ?> <?php echo $this->caller['postal_code'];?>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span3">
+                        Phone Number:
+                    </div>
+                    <div class="span9">
+                        <?php echo $this->caller['phone_number'];?>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span3">
+                        Call Status:
+                    </div>
+                    <div class="span9">
+                        <?php echo $this->caller['call_status'];?>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span3">
+                        Created:
+                    </div>
+                    <div class="span9">
+                        <?php echo $this->caller['date_created'];?>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span3">
+                        Updated:
+                    </div>
+                    <div class="span9">
+                        <?php echo $this->caller['date_updated'];?>
+                    </div>
+                </div>
+                <hr>
+                <div class="row-fluid">
+                    <div class="span3">
+                        Did they book a stay?
+                    </div>
+                    <div class="span9">
+                        <?php echo ($this->caller['booked']) ? "Yes" : "No";?>
+                    </div>
+                </div>
+                <?php if($this->caller['booked']):?>
+                    <div class="row-fluid">
+                        <div class="span3">
+                            What did they rate the property?
+                        </div>
+                        <div class="span9">
+                            <?php echo $this->caller['rating'];?>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span3">
+                            Would they recommend the property to someone?
+                        </div>
+                        <div class="span9">
+                            <?php echo ($this->caller['recommend']) ? "Yes" : "No";?>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <div class="row-fluid">
+                        <div class="span3">
+                            What reason did they decide not to book?
+                        </div>
+                        <div class="span9">
+                            <?php echo $this->caller['reason'];?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div><!--/span-->
+        </div><!--/row-->
+    </div><!--/span-->
+</div><!--/row-->

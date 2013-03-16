@@ -25,8 +25,18 @@ class LogsControllerTest extends Zend_Test_PHPUnit_ControllerTestCase {
     }
 
     public function testViewAction(){
-        $this->dispatch('/logs');
+        $this->dispatch('/logs/view');
         $this->assertController('logs');
-        $this->assertAction('index');
+        $this->assertAction('view');
+    }
+
+    public function testViewActionWithId(){
+        $this->request->setQuery(array(
+            'id' => 1
+        ));
+
+        $this->dispatch('/logs/view');
+        $this->assertController('logs');
+        $this->assertAction('view');
     }
 }
