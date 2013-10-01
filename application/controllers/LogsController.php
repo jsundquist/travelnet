@@ -33,6 +33,5 @@ class LogsController extends Zend_Controller_Action {
         $callsModel = new Application_Model_DbTable_Calls();
 
         $this->view->caller = $callsModel->getCall($id);
-//        var_dump($this->view->caller);die();
     }
 }
